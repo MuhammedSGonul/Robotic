@@ -32,7 +32,7 @@ SoftwareSerial ESerial(PIN_RX, PIN_TX);
 
 
 
-void setup() {
+void setup() { 
   pinMode(PIN_AX, INPUT);
   pinMode(PIN_M0, OUTPUT);
   pinMode(PIN_M1, OUTPUT);
