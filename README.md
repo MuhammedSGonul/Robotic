@@ -11,7 +11,7 @@ Pinouts:
 |M1| <--> |D4|
 |M0| <--> |D5|
 
-| Left-aligned | Center-aligned | Right-aligned |
+| LoRa | Center-aligned | Right-aligned |
 | :---         |     :---:      |          ---: |
 | git status   | git status     | git status    |
 | git diff     | git diff       | git diff      |
