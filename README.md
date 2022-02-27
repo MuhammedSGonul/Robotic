@@ -13,5 +13,5 @@ Pinouts:
 
 | LoRa |  | Arduino |
 | :---         |     :---:      |          ---: |
-| GND   | git status     | GND    |
-| VCC     | git diff       | 5V      |
+| GND | <--> | GND |
+| VCC | <--> | 5V |
