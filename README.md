@@ -11,7 +11,7 @@ Pinouts:
 |M1| <--> |D4|
 |M0| <--> |D5|
 
-| LoRa | Center-aligned | Right-aligned |
+| LoRa |  | Arduino |
 | :---         |     :---:      |          ---: |
-| git status   | git status     | git status    |
-| git diff     | git diff       | git diff      |
+| GND   | git status     | GND    |
+| VCC     | git diff       | 5V      |
