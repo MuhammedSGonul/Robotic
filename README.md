@@ -1,6 +1,6 @@
-#Arduino-LoRa E32 EByte Example
+# Arduino-LoRa E32 EByte Example
 
-Pinouts:
+### Pinouts:
 
 | LoRa |  | Arduino |
 | :---         |     :---:      |          ---: |
