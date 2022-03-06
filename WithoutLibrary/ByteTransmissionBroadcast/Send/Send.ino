@@ -7,11 +7,10 @@
  *      GND     ------->      GND      
  *      VCC     ------->      5V
  *      AUX     ------->      
- *      TXD     ------->      D3
- *      RXD     ------->      D2
+ *      TXD     ------->      D2
+ *      RXD     ------->      D3
  *      M1      ------->      D4
  *      M0      ------->      D5
-
   Notice: If you are testing in Arduino MEGA and not working, 
   try this pin configuration : RXD ----> D10, TXD ----> D11.
  
@@ -20,8 +19,8 @@
 
 #include <SoftwareSerial.h>
 
-#define PIN_RX 3
-#define PIN_TX 2
+#define PIN_RX 2
+#define PIN_TX 3
 #define PIN_M0 4
 #define PIN_M1 5
 #define PIN_AX 6
