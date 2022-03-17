@@ -23,7 +23,6 @@
 #define PIN_TX 3
 #define PIN_M0 4
 #define PIN_M1 5
-#define PIN_AX 6
 
 
 uint8_t Data;
