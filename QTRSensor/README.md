@@ -1,6 +1,6 @@
 # Line following robot with QTR-8RC (PID CONTROL)
 
-&nbsp;&nbsp;&nbsp;&nbsp; PID kontrol sistemlerinin kullanıldığı alanlar, genellikle stabil değerler istenilen durumlardan doğar. Çizgi izleyen robot yaparken de bizim istediğimiz stabil durum, robotun çizgiyi tam olarak ortalayarak yoluna devam etmesi. Bunun için de PID denkleminden yararlanacağız:
+&nbsp;&nbsp;&nbsp;&nbsp; [PID Kontrol Sistemleri](https://en.wikipedia.org/wiki/PID_controller)'nin kullanıldığı alanlar, genellikle stabil değerler istenilen durumlardan doğar. Çizgi izleyen robot yaparken de bizim istediğimiz stabil durum, robotun çizgiyi tam olarak ortalayarak yoluna devam etmesi. Bunun için de [PID denkleminden](https://en.wikipedia.org/wiki/PID_controller#Mathematical_form) yararlanacağız:
 
 <p align="center"><img src="https://raw.githubusercontent.com/MuhammedSGonul/Arduino-Projects/main/QTRSensor/PIDEquation.png" height="39" width="442"></p>
 
@@ -8,4 +8,7 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/MuhammedSGonul/Arduino-Projects/main/QTRSensor/PDEquation.png" height="39" width="265"></p>
 
-&nbsp;&nbsp;&nbsp;&nbsp; Bu denklemde türev işleminde süreye göre hareket etmemiz de gerekiyor. Burada dikkat çekmek istediğim nokta diğer kontrol sistemlerine göre sistemimizdeki farklılık zamana göre doğruluk tepkisinden de ziyade konum tepkisi. Dolayısıyla zamanı dikkate almamamız robotun çizgiyi takip etme şeklinde pek bir değişiklik oluşturmayacak. (X-Y grafiği düşünün: Y ekseni 0-5000 arası pozisyonu gösteriyor ve y = 2500 çizgisi setpoint, X ekseni ise sadece çizgi izleyen robot pisti. Orijin noktasından bir veri grafiği, robot pistte ilerlerken setpoint'e doğru yaklaşıyor).
+&nbsp;&nbsp;&nbsp;&nbsp; Bu denklemde türev işleminde süreye göre hareket etmemiz de gerekiyor. Burada dikkat çekmek istediğim nokta diğer kontrol sistemlerine göre sistemimizdeki farklılık zamana göre doğruluk tepkisinden de ziyade konum tepkisi. Dolayısıyla zamanı dikkate almamamız robotun çizgiyi takip etme şeklinde pek bir değişiklik oluşturmayacak (X-Y grafiği düşünün: Y ekseni 0-5000 arası pozisyonu gösteriyor ve y = 2500 çizgisi setpoint, X ekseni ise sadece çizgi izleyen robot pisti. Orijin noktasından bir veri grafiği, robot pistte ilerlerken setpoint'e doğru yaklaşıyor).
+
+&nbsp;&nbsp;&nbsp;&nbsp; [Çıkış algoritmasını](https://en.wikipedia.org/wiki/PID_controller#Pseudocode) yazdıktan sonra Kp (oransal kazanç) ve Kd (türevsel kazanç) sabitlerini bizim belirlememiz gerekiyor. Bu katsayıları belirlemede belirli bir formül yoktur, belli başlı metodlar vardır. Bu projede yalnızca PD kullanacağımız için ben PD kazançlarını manuel ayarladım. Eğer I (integral) de kullanmış olsaydık o zaman [Ziegler-Nichols](https://en.wikipedia.org/wiki/Ziegler–Nichols_method), [Cohen-Coon](https://en.wikipedia.org/wiki/PID_controller#Cohen–Coon_parameters) vs. metodları uygulayarak kazançları belirleyebilirdik.
+
