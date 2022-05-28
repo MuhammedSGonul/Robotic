@@ -10,12 +10,12 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; Bu denklemde türev işleminde süreye göre hareket etmemiz de gerekiyor. Burada dikkat çekmek istediğim nokta diğer kontrol sistemlerine göre sistemimizdeki farklılık zamana göre doğruluk tepkisinden de ziyade konum tepkisi. Dolayısıyla zamanı dikkate almamamız robotun çizgiyi takip etme şeklinde pek bir değişiklik oluşturmayacak (X-Y grafiği düşünün: Y ekseni 0-5000 arası pozisyonu gösteriyor ve y = 2500 çizgisi setpoint, X ekseni ise sadece çizgi izleyen robot pisti. Orijin noktasından bir veri grafiği, robot pistte ilerlerken setpoint'e doğru yaklaşıyor).
 
-
+```python
     error = position - setPoint;  
     rateError = error - lastError;
     out = kp * error + kd * rateError;
     lastError = error;
-
+```
 
 &nbsp;&nbsp;&nbsp;&nbsp; [PID algoritmasını](https://en.wikipedia.org/wiki/PID_controller#Pseudocode) kendimize göre çıkış algoritmasına çevirdikten sonra Kp (oransal kazanç) ve Kd (türevsel kazanç) sabitlerini belirlememiz gerekiyor. Bu katsayıları belirlemede belirli bir formül yoktur, belli başlı metodlar vardır. Bu projede yalnızca PD kullanacağımız için ben PD kazançlarını manuel ayarlayacağız. Eğer I (integral) de kullanmış olsaydık o zaman [Ziegler-Nichols](https://en.wikipedia.org/wiki/Ziegler–Nichols_method), [Cohen-Coon](https://en.wikipedia.org/wiki/PID_controller#Cohen–Coon_parameters) vs. metodları uygulayarak kazançları belirleyebilirdik.
 
@@ -32,6 +32,30 @@ Parçaların aşağıdaki diagrama göre bağlantılarını gerçekleştireceği
 <p align="center"><img src="https://raw.githubusercontent.com/MuhammedSGonul/Arduino-Projects/main/QTRSensor/Diagram.png" height= "555" width= "768"></p>
 
 ### Yazılım
-&nbsp;&nbsp;&nbsp;&nbsp; İlk ihtiyacımız olan kızılötesi sensör için üreticisi olan [Pololu'nun yazdığı kütüphaneyi](https://github.com/pololu/qtr-sensors-arduino) indirip kurmak (Kod, version 4.0.0'a göre uyumlu). Ardından [LineFollower.ino](https://github.com/MuhammedSGonul/Arduino-rojects/blob/main/QTRSensor/LineFollower/LineFollower.ino) dosyasını açarak içerisinde bazı değişkenleri kendimize göre ayarlamamız gerekiyor.
+&nbsp;&nbsp;&nbsp;&nbsp; İlk ihtiyacımız olan kızılötesi sensör için üreticisi olan [Pololu'nun yazdığı kütüphaneyi](https://github.com/pololu/qtr-sensors-arduino) indirip kurmak (Kod, version 4.0.0'a göre uyumlu). Ardından [LineFollower.ino](https://github.com/MuhammedSGonul/Arduino-rojects/blob/main/QTRSensor/LineFollower/LineFollower.ino) dosyasını açarak içerisinde bazı değişkenleri kendimize göre ayarlamamız gerekiyor. 
+<br/><br/>
 
+```c
+    #define kp .1
+    #define kd 4
+```
 
+&nbsp;&nbsp;&nbsp;&nbsp; P ve D kazançlarını, robotun pistte nasıl bir durum sergileyeceğini bilmediğimiz için ilk çalıştırmada <code>kp</code> ve <code>kd</code> değişkenlerinde herhangi bir değişiklik yapmamıza gerek yok.
+<br/><br/>
+
+```c
+    int maxSpeed = 200, normalSpeed = 140, rightMotorSpeed, leftMotorSpeed;
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; Motorlarınızın modeline göre <code>maxSpeed</code> ve <code>normalSpeed</code> değişkenlerini ayarlayabilirsiniz.
+<br/><br/>
+
+```c
+    #define NUM_SENSORS 6
+    unsigned int sensorValues[NUM_SENSORS];
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; Eğer kullanacağınız sensör sayısı değişkenlik gösteriyorsa kullandığınız sensör sayısı kadar <code>NUM_SENSORS</code> değişkenine değer verin. Bu sayede <code>sensorValues</code> sensör sayısına göre bir dizi oluşturacak.
+<br/><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp; Değişkenlerde ayarlamaları yaptıktan sonra sırada <code>setup()</code> kısmında bazı ayarlamalar gerekiyor.
