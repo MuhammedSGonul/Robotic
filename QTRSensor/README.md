@@ -19,19 +19,19 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp; [PID algoritmasını](https://en.wikipedia.org/wiki/PID_controller#Pseudocode) kendimize göre çıkış algoritmasına çevirdikten sonra Kp (oransal kazanç) ve Kd (türevsel kazanç) sabitlerini belirlememiz gerekiyor. Bu katsayıları belirlemede belirli bir formül yoktur, belli başlı metodlar vardır. Bu projede yalnızca PD kullanacağımız için ben PD kazançlarını manuel ayarlayacağız. Eğer I (integral) de kullanmış olsaydık o zaman [Ziegler-Nichols](https://en.wikipedia.org/wiki/Ziegler–Nichols_method), [Cohen-Coon](https://en.wikipedia.org/wiki/PID_controller#Cohen–Coon_parameters) vs. metodları uygulayarak kazançları belirleyebilirdik.
 
-
 ## Algoritmanın bu karışık kısmı bittiğine göre şimdi tamamen robotu yapmaya geçebiliriz.
 
-
-Kullanılacak elektronik parçalar: 
+### Elektronik: 
 * L298N Motor Sürücü Kartı
 * QTR-8RC Kızılötesi Sensör
 * 2x DC Motor
 * Arduino
 * 2S - 7.4V LiPo Batarya
 
-Parçaları aşağıdaki diagrama göre bağlantılarını gerçekleştireceğiz.
+Parçaların aşağıdaki diagrama göre bağlantılarını gerçekleştireceğiz.
 <p align="center"><img src="https://raw.githubusercontent.com/MuhammedSGonul/Arduino-Projects/main/QTRSensor/Diagram.png" height= "555" width= "768"></p>
 
+### Yazılım
+&nbsp;&nbsp;&nbsp;&nbsp; İlk ihtiyacımız olan kızılötesi sensör için üreticisi olan [Pololu'nun yazdığı kütüphaneyi](https://github.com/pololu/qtr-sensors-arduino) indirip kurmak (Kod, version 4.0.0'a göre uyumlu). Ardından [LineFollower.ino](https://github.com/MuhammedSGonul/Arduino-rojects/blob/main/QTRSensor/LineFollower/LineFollower.ino) dosyasını açarak içerisinde bazı değişkenleri kendimize göre ayarlamamız gerekiyor.
 
-Sırada yazılım kısmı var. İlk ihtiyacımız olan kızılötesi sensör için üreticisi olan [Pololu'nun yazdığı kütüphaneyi](https://github.com/pololu/qtr-sensors-arduino) indirip kurmak. 
+
