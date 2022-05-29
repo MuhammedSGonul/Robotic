@@ -59,3 +59,17 @@ Parçaların aşağıdaki diagrama göre bağlantılarını gerçekleştireceği
 <br/><br/>
 
 &nbsp;&nbsp;&nbsp;&nbsp; Değişkenlerde ayarlamaları yaptıktan sonra sırada <code>setup()</code> kısmında bazı ayarlamalar gerekiyor.
+<br/><br/>
+
+```c
+    qtrrc.setTypeRC();
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; Kullandığımız sensör tipi dijital olduğundan <code>setTypeRC()</code> şeklinde çağırıyoruz. Analog sensör (QTR-8A) kullanılacaksa <code>setTypeAnalog()</code> fonksiyonunu çağırmamız gerekiyordu. Tabi bunun yanında da sensörün pinleri de analog girişlere takılmalı ve belirtilmeli.
+<br/><br/>
+
+```c
+    qtrrc.setSensorPins((const uint8_t[]) {7, 8, 9, 10, 11, 12}, NUM_SENSORS);
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; Burada belirtilen pin numaraları baştan sona (7 ----> 12) pozisyonunu belirlemede yardımcı olacak şekilde 1. sensör 2. sensör... şeklinde baz alıyor. Sensör pin numaralarını doğru sırayla girdiğimizden emin olacağız. Pekala pinleri tam tersi olarak (12 ---> 7) girersek de birazdan aşağıda belirteceğim durumu göz önünde bulundurarak yazılımımızda ufak çaplı bir değişiklik yapmış olacağız.
