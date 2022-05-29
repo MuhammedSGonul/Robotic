@@ -72,4 +72,4 @@ Parçaların aşağıdaki diagrama göre bağlantılarını gerçekleştireceği
     qtrrc.setSensorPins((const uint8_t[]) {7, 8, 9, 10, 11, 12}, NUM_SENSORS);
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp; Burada belirtilen pin numaraları baştan sona (7 ----> 12) pozisyonunu belirlemede yardımcı olacak şekilde 1. sensör 2. sensör... şeklinde baz alıyor. Sensör pin numaralarını doğru sırayla girdiğimizden emin olacağız. Pekala pinleri tam tersi olarak (12 ---> 7) girersek de birazdan aşağıda belirteceğim durumu göz önünde bulundurarak yazılımımızda ufak çaplı bir değişiklik yapmış olacağız.
+&nbsp;&nbsp;&nbsp;&nbsp; Burada belirtilen pin numaraları baştan sona (7 ----> 12) pozisyonunu belirlemede yardımcı olacak şekilde 1. sensör 2. sensör... şeklinde baz alıyor. Sensör pin numaralarını doğru sırayla girdiğimizden emin olacağız. Pekâlâ pinleri tam tersi olarak (12 ---> 7) girersek de birazdan aşağıda belirteceğim durumu göz önünde bulundurarak yazılımımızda ufak çaplı bir değişiklik yapmış olacağız.
