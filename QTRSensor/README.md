@@ -72,4 +72,35 @@ Parçaların aşağıdaki diagrama göre bağlantılarını gerçekleştireceği
     qtrrc.setSensorPins((const uint8_t[]) {7, 8, 9, 10, 11, 12}, NUM_SENSORS);
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp; Burada belirtilen pin numaraları baştan sona (7 ----> 12) pozisyonunu belirlemede yardımcı olacak şekilde 1. sensör 2. sensör... şeklinde baz alıyor. Sensör pin numaralarını doğru sırayla girdiğimizden emin olacağız. Pekâlâ pinleri tam tersi olarak (12 ---> 7) girersek de birazdan aşağıda belirteceğim durumu göz önünde bulundurarak yazılımımızda ufak çaplı bir değişiklik yapmış olacağız.
+&nbsp;&nbsp;&nbsp;&nbsp; Burada belirtilen pin numaraları baştan sona (7 ---> 12) pozisyonunu belirlemede yardımcı olacak şekilde 1. sensör 2. sensör... şeklinde baz alıyor. Sensör pin numaralarını doğru sırayla girdiğimizden emin olacağız. Pekâlâ pinleri tam tersi olarak (12 ---> 7) girersek de birazdan aşağıda belirteceğim durumu göz önünde bulundurarak yazılımımızda ufak çaplı bir değişiklik yapmış olacağız.
+<br/><br/>
+
+```c
+    for (int i = 0; i < 70; i++){
+      qtrrc.calibrate();
+      digitalWrite(13,HIGH);
+      delay(20);
+      digitalWrite(13,LOW);
+      delay(20);       
+    }
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; En başta sensör pozisyonunu kalibre etme amaçlı olarak bir döngü içinde kalibrasyon yapacağız. Kalibre işlemi gerçekleşirken, bizim bunu görebilmemiz adına arduinonun üzerindeki ledi 20 ms aralıklarla yakıp söndürüyoruz. Bu da 20 + 20 = 40ms / döngü başına demek olur. 70 döngü * 40 ms = 2.8 saniye demek. Yani sensör 2.8 saniye boyunca kalibre edilecek.
+<br/><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp; Devamını gözden geçirip kontrol etmek adına <code>loop()</code> döngüsünü anlayalım.
+<br/><br/>
+
+```c
+position = qtrrc.readLineBlack(sensorValues); 
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; QTR kütüphanesinden yararlanarak pozisyonunu okutmayı amaçlayacağız. Pistteki çizgiyi çektiğimiz bandın rengine göre iki farklı fonksiyon bulunmakta. Bunlardan <code>readLineBlack()</code> veya <code>readLineWhite()</code> fonksiyonlarını seçebilirsiniz. Fonksiyonu uygulayarak pozisyonunu atadığımızda, pozisyon 0 ile 5000 aralığında değer almış olacak. Pozisyon durumu da PID komutlarında işimize yarayacak.
+<br/><br/>
+
+```python
+    error = position - setPoint;  
+    rateError = error - lastError;
+    out = kp * error + kd * rateError;
+    lastError = error;
+```
