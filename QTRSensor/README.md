@@ -72,7 +72,7 @@ Parçaların aşağıdaki diagrama göre bağlantılarını gerçekleştireceği
     qtrrc.setSensorPins((const uint8_t[]) {7, 8, 9, 10, 11, 12}, NUM_SENSORS);
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp; Burada belirtilen pin numaraları baştan sona (7 ---> 12) pozisyonunu belirlemede yardımcı olacak şekilde 1. sensör 2. sensör... şeklinde baz alıyor. Sensör pin numaralarını doğru sırayla girdiğimizden emin olacağız. Pekâlâ pinleri tam tersi olarak (12 ---> 7) girersek de birazdan aşağıda belirteceğim durumu göz önünde bulundurarak yazılımımızda ufak çaplı bir değişiklik yapmış olacağız.
+&nbsp;&nbsp;&nbsp;&nbsp; Burada belirtilen pin numaraları baştan sona (7 ---> 12) pozisyonunu belirlemede yardımcı olacak şekilde 1. sensör 2. sensör... şeklinde baz alıyor. Sensör pin numaralarını doğru sırayla girdiğimizden emin olacağız. Pekâlâ pinler tam tersi olarak (12 ---> 7) girilince de motor hızlarında belirtilecek durumu göz önünde bulundurarak yazılımda ufak çaplı bir değişiklik uygulanmış olacak.
 <br/><br/>
 
 ```c
@@ -92,7 +92,7 @@ Parçaların aşağıdaki diagrama göre bağlantılarını gerçekleştireceği
 <br/><br/>
 
 ```c
-position = qtrrc.readLineBlack(sensorValues); 
+    position = qtrrc.readLineBlack(sensorValues); 
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp; QTR kütüphanesinden yararlanarak pozisyonunu okutmayı amaçlayacağız. Pistteki çizgiyi çektiğimiz bandın rengine göre iki farklı fonksiyon bulunmakta. Bunlardan <code>readLineBlack()</code> veya <code>readLineWhite()</code> fonksiyonlarını seçebilirsiniz. Fonksiyonu uygulayarak pozisyonunu atadığımızda, pozisyon 0 ile 5000 aralığında değer almış olacak. Pozisyon durumu da PID komutlarında işimize yarayacak.
@@ -104,3 +104,13 @@ position = qtrrc.readLineBlack(sensorValues);
     out = kp * error + kd * rateError;
     lastError = error;
 ```
+
+&nbsp;&nbsp;&nbsp;&nbsp; En başta oluşturduğumuz kontrol denkleminin uygulanmasına burada geçiyoruz. Buradaki çıktı değişkeni <code>out</code> olacak. Değişken, robotun sıradaki hareket stratejisini belirlemeye yarayan motor hızlarında kullanılacak.
+<br/><br/>
+
+```python
+    rightMotorSpeed = normalSpeed + out;
+    leftMotorSpeed = normalSpeed - out;
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; İki motor için de aynı güç uygulanmaması, devamında da aynı hareketlerin oluşmaması için <code>out</code> değişkeni bir motora eklenirken diğer motordan çıkarılıyor. Hangi motordan çıkarılıp hangisine eklenileceği, pinlerin belirlendiği sıraya göre değişeceği bilinmesi gerekiyor. Yukarıda konfigüre edilen sensör pinlerinde eğer ki sıra değiştiyse, buradaki motorlara eklenen değişkenin toplama durumu da değişecek (Yani rightMotorSpeed + out iken - out olacak).
